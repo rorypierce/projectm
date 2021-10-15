@@ -92,24 +92,17 @@ if(ENABLE_SDL)
     include(SDL2Target)
 endif()
 
-if(ENABLE_GLES)
-    # Might be implemented in the CMake OpenGL module.
-    # We may provide a find module in the future, and add support for CMake's own module later:
-    # https://gitlab.kitware.com/cmake/cmake/-/blob/3fc3b43933d0b486aa4eb5d63fc257475feff348/Modules/FindOpenGL.cmake#L520
-    message(FATAL_ERROR "GLES support is currently not implemented for CMake builds.")
-    find_package(GLES3 REQUIRED)
-else()
+
     find_package(OpenGL REQUIRED)
-    set(PROJECTM_OPENGL_LIBRARIES OpenGL::GL)
+    set(PROJECTM_OPENGL_LIBRARIES OpenGL)
     # GLX is required by SOIL2 on platforms with the X Window System (e.g. most Linux distributions)
-    if(TARGET OpenGL::GLX)
-        list(APPEND PROJECTM_OPENGL_LIBRARIES OpenGL::GLX)
+    if(TARGET OpenGL)
+        list(APPEND PROJECTM_OPENGL_LIBRARIES OpenGL)
     endif()
     if(CMAKE_SYSTEM_NAME STREQUAL "Windows")
         find_package(GLEW REQUIRED)
-        list(APPEND PROJECTM_OPENGL_LIBRARIES GLEW::glew)
+        list(APPEND PROJECTM_OPENGL_LIBRARIES GLEW)
     endif()
-endif()
 
 if(ENABLE_THREADING)
     set(CMAKE_THREAD_PREFER_PTHREAD YES)

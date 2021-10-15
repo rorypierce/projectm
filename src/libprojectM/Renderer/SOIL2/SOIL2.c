@@ -251,7 +251,8 @@ void * SOIL_GL_GetProcAddress(const char *proc)
 	CFRelease( bundle );
 #elif defined( SOIL_X11_PLATFORM )
 	func =
-#if !defined(GLX_VERSION_1_4)
+#if !defined(GLEW_VERSION)
+	//#error "FATAL_ERROR 'No GLEW. Get some GLEW... {insert something helpful here todo}'"
 	glXGetProcAddressARB
 #else
 	glXGetProcAddress
